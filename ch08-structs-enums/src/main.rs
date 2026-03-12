@@ -2,7 +2,7 @@
 use std::fmt;
 
 // --- 構造体 ---
-struct User {
+struct UserProfile {
     name: String,
     email: String,
     age: u32,
@@ -165,14 +165,14 @@ fn find_first_even(numbers: &[i32]) -> Option<i32> {
 
 // --- Debug derive ---
 #[derive(Debug)]
-struct DebugUser {
+struct User {
     name: String,
     age: u32,
 }
 
 fn main() {
     // --- 構造体の定義 ---
-    let user = User {
+    let user = UserProfile {
         name: String::from("田中太郎"),
         email: String::from("tanaka@example.com"),
         age: 30,
@@ -181,7 +181,7 @@ fn main() {
     println!("名前: {}, 年齢: {}", user.name, user.age);
 
     // --- ミュータブルな構造体 ---
-    let mut user = User {
+    let mut user = UserProfile {
         name: String::from("田中太郎"),
         email: String::from("old@example.com"),
         age: 30,
@@ -301,7 +301,7 @@ fn main() {
     println!("座標: {p}");
 
     // --- Debug トレイト ---
-    let user = DebugUser {
+    let user = User {
         name: String::from("Alice"),
         age: 25,
     };
