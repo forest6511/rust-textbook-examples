@@ -3,6 +3,16 @@ fn add(x: i32, y: i32) -> i32 {
     x + y
 }
 
+fn min_max(numbers: &[i32]) -> (i32, i32) {
+    let mut min = numbers[0];
+    let mut max = numbers[0];
+    for &n in &numbers[1..] {
+        if n < min { min = n; }
+        if n > max { max = n; }
+    }
+    (min, max)
+}
+
 fn main() {
     // --- 変数と束縛 ---
     let x = 5;
@@ -68,6 +78,21 @@ fn main() {
         x + 1
     };
     println!("yの値は: {y}");
+
+    // --- 型変換（as） ---
+    let x: i32 = 42;
+    let y: f64 = x as f64;        // i32 → f64
+    let z: u8 = x as u8;          // i32 → u8（範囲内なら安全）
+    println!("i32={x}, f64={y}, u8={z}");
+
+    let pi = 3.14_f64;
+    let truncated = pi as i32;     // 小数部は切り捨て
+    println!("f64={pi}, i32={truncated}");
+
+    // --- 複数の戻り値（タプル） ---
+    let nums = [3, 7, 1, 9, 4];
+    let (min, max) = min_max(&nums);
+    println!("最小: {min}, 最大: {max}");
 
     // --- 型推論 ---
     let x = 5;

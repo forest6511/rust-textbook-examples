@@ -72,6 +72,27 @@ fn main() {
         println!("{i}");
     }
 
+    // --- ループラベル ---
+    let mut found = (0, 0);
+
+    'outer: for i in 0..5 {
+        for j in 0..5 {
+            if i + j == 6 {
+                found = (i, j);
+                break 'outer; // 外側のloopを抜ける
+            }
+        }
+    }
+
+    println!("合計6の組: ({}, {})", found.0, found.1);
+
+    // --- while let ---
+    let mut stack = vec![1, 2, 3, 4, 5];
+
+    while let Some(top) = stack.pop() {
+        println!("{top}");
+    }
+
     // --- match ---
     let number = 3;
     match number {
