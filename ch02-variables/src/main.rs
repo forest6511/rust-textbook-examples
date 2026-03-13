@@ -1,4 +1,5 @@
 // Rust言語の教科書 — 第2章 サンプルコード
+#![allow(clippy::approx_constant)] // 教育目的で 3.14 リテラルを使用
 fn add(x: i32, y: i32) -> i32 {
     x + y
 }
