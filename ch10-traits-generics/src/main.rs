@@ -1,4 +1,6 @@
 // Rust言語の教科書 — 第10章 サンプルコード
+#![allow(dead_code)]
+#![allow(clippy::approx_constant)]
 use std::fmt;
 
 // --- トレイトの定義 ---

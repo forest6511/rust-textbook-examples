@@ -1,4 +1,6 @@
 // Rust言語の教科書 — 第11章 サンプルコード
+#![allow(dead_code)]
+#![allow(clippy::manual_range_contains)]
 use std::fmt;
 use std::fs;
 use std::io;

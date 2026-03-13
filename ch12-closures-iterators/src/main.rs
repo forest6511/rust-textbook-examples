@@ -1,4 +1,8 @@
 // Rust言語の教科書 — 第12章 サンプルコード
+#![allow(clippy::manual_repeat_n)]
+#![allow(clippy::unnecessary_fold)]
+#![allow(clippy::iter_count)]
+#![allow(clippy::useless_vec)]
 use std::collections::HashMap;
 
 struct Student {

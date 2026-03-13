@@ -1,4 +1,7 @@
 // Rust言語の教科書 — 第8章 サンプルコード
+#![allow(dead_code)]
+#![allow(clippy::manual_find)]
+#![allow(clippy::unnecessary_literal_unwrap)]
 use std::fmt;
 
 // --- 構造体 ---

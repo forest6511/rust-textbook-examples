@@ -1,7 +1,7 @@
 // Rust言語の教科書 — 第4章 サンプルコード
+#![allow(clippy::approx_constant)]
 fn add(a: i32, b: i32) -> i32 {
-    let sum = a + b;
-    sum
+    a + b
 }
 
 fn create_greeting() -> String {

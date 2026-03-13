@@ -1,4 +1,7 @@
 // Rust言語の教科書 — 第9章 サンプルコード
+#![allow(clippy::vec_init_then_push)]
+#![allow(clippy::useless_vec)]
+#![allow(clippy::unwrap_or_default)]
 use std::collections::HashMap;
 
 fn average(numbers: &[f64]) -> f64 {

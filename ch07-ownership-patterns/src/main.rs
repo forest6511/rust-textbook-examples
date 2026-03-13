@@ -1,4 +1,6 @@
 // Rust言語の教科書 — 第7章 サンプルコード
+#![allow(clippy::unwrap_or_default)]
+#![allow(clippy::unnecessary_literal_unwrap)]
 fn to_uppercase(s: &str) -> String {
     s.to_uppercase()
 }
@@ -90,7 +92,7 @@ fn main() {
     let greeting = if name.len() > 5 {
         format!("Hello, {name}!")
     } else {
-        format!("{name}")
+        name.to_string()
     };
     println!("{greeting}");
     println!("元の名前: {name}");
