@@ -22,10 +22,7 @@ fn group_by_length<'a>(words: &[&'a str]) -> HashMap<usize, Vec<&'a str>> {
     let mut groups: HashMap<usize, Vec<&str>> = HashMap::new();
 
     for &word in words {
-        groups
-            .entry(word.len())
-            .or_insert_with(Vec::new)
-            .push(word);
+        groups.entry(word.len()).or_insert_with(Vec::new).push(word);
     }
     groups
 }

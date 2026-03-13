@@ -32,10 +32,7 @@ enum AppError {
 }
 
 impl fmt::Display for AppError {
-    fn fmt(
-        &self,
-        f: &mut fmt::Formatter,
-    ) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             AppError::Io(e) => {
                 write!(f, "IOエラー: {e}")
@@ -53,20 +50,14 @@ impl From<io::Error> for AppError {
     }
 }
 
-fn matches_name(
-    path: &Path,
-    pattern: &str,
-) -> bool {
+fn matches_name(path: &Path, pattern: &str) -> bool {
     path.file_name()
         .and_then(|name| name.to_str())
         .map(|name| name.contains(pattern))
         .unwrap_or(false)
 }
 
-fn search_content(
-    path: &Path,
-    keyword: &str,
-) -> Vec<(usize, String)> {
+fn search_content(path: &Path, keyword: &str) -> Vec<(usize, String)> {
     let content = match fs::read_to_string(path) {
         Ok(c) => c,
         Err(_) => return Vec::new(),
@@ -103,8 +94,7 @@ fn search_files(args: &Args) {
         }
 
         if let Some(ref keyword) = args.content {
-            let matches =
-                search_content(path, keyword);
+            let matches = search_content(path, keyword);
             if !matches.is_empty() {
                 found = true;
                 println!("{}:", path.display());
@@ -119,16 +109,12 @@ fn search_files(args: &Args) {
     }
 
     if !found {
-        println!(
-            "一致するファイルはありませんでした"
-        );
+        println!("一致するファイルはありませんでした");
     }
 }
 
 fn run(args: &Args) -> Result<(), AppError> {
-    if args.name.is_none()
-        && args.content.is_none()
-    {
+    if args.name.is_none() && args.content.is_none() {
         return Err(AppError::InvalidArgs(
             "--name または --content を\
              指定してください"
@@ -140,10 +126,7 @@ fn run(args: &Args) -> Result<(), AppError> {
     if !path.exists() {
         return Err(AppError::Io(io::Error::new(
             io::ErrorKind::NotFound,
-            format!(
-                "ディレクトリが見つかりません: {}",
-                args.path
-            ),
+            format!("ディレクトリが見つかりません: {}", args.path),
         )));
     }
 
@@ -194,14 +177,9 @@ mod tests {
     fn test_search_content_found() {
         let dir = std::env::temp_dir();
         let file = dir.join("rustfind_test.txt");
-        fs::write(
-            &file,
-            "hello world\nfoo bar\nhello rust\n",
-        )
-        .unwrap();
+        fs::write(&file, "hello world\nfoo bar\nhello rust\n").unwrap();
 
-        let results =
-            search_content(&file, "hello");
+        let results = search_content(&file, "hello");
         assert_eq!(results.len(), 2);
         assert_eq!(results[0].0, 1);
         assert_eq!(results[1].0, 3);
@@ -213,11 +191,9 @@ mod tests {
     fn test_search_content_not_found() {
         let dir = std::env::temp_dir();
         let file = dir.join("rustfind_test2.txt");
-        fs::write(&file, "aaa\nbbb\nccc\n")
-            .unwrap();
+        fs::write(&file, "aaa\nbbb\nccc\n").unwrap();
 
-        let results =
-            search_content(&file, "xyz");
+        let results = search_content(&file, "xyz");
         assert!(results.is_empty());
 
         fs::remove_file(&file).ok();

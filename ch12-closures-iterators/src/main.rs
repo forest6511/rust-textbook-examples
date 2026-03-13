@@ -25,10 +25,7 @@ fn main() {
     let threshold = 80;
     let scores = vec![65, 92, 78, 88, 55];
     let is_passing = |score: &i32| *score >= threshold;
-    let passing: Vec<&i32> = scores
-        .iter()
-        .filter(|s| is_passing(s))
-        .collect();
+    let passing: Vec<&i32> = scores.iter().filter(|s| is_passing(s)).collect();
     println!("合格: {passing:?}");
     println!("基準点: {threshold}");
 
@@ -68,10 +65,7 @@ fn main() {
 
     // --- イテレータの生成 ---
     {
-        let names = vec![
-            String::from("Alice"),
-            String::from("Bob"),
-        ];
+        let names = vec![String::from("Alice"), String::from("Bob")];
         for name in names.iter() {
             println!("参照: {name}");
         }
@@ -84,17 +78,13 @@ fn main() {
     // --- 範囲イテレータ ---
     let sum: i32 = (1..=100).sum();
     println!("1から100の合計: {sum}");
-    let zeros: Vec<i32> =
-        std::iter::repeat(0).take(5).collect();
+    let zeros: Vec<i32> = std::iter::repeat(0).take(5).collect();
     println!("ゼロ5個: {zeros:?}");
 
     // --- map ---
     {
         let scores = vec![80, 90, 75, 88];
-        let doubled: Vec<i32> = scores
-            .iter()
-            .map(|&score| score * 2)
-            .collect();
+        let doubled: Vec<i32> = scores.iter().map(|&score| score * 2).collect();
         println!("元の得点: {scores:?}");
         println!("2倍: {doubled:?}");
     }
@@ -102,10 +92,7 @@ fn main() {
     // --- filter ---
     {
         let scores = vec![65, 92, 78, 88, 55, 95];
-        let high_scores: Vec<&i32> = scores
-            .iter()
-            .filter(|&&score| score >= 80)
-            .collect();
+        let high_scores: Vec<&i32> = scores.iter().filter(|&&score| score >= 80).collect();
         println!("80点以上: {high_scores:?}");
     }
 
@@ -119,11 +106,7 @@ fn main() {
     {
         let names = vec!["Alice", "Bob", "Charlie"];
         let scores = vec![85, 92, 78];
-        let results: Vec<(&str, &i32)> = names
-            .iter()
-            .copied()
-            .zip(scores.iter())
-            .collect();
+        let results: Vec<(&str, &i32)> = names.iter().copied().zip(scores.iter()).collect();
         for (name, score) in &results {
             println!("{name}: {score}点");
         }
@@ -132,33 +115,25 @@ fn main() {
     // --- fold ---
     {
         let numbers = vec![1, 2, 3, 4, 5];
-        let sum =
-            numbers.iter().fold(0, |acc, &n| acc + n);
+        let sum = numbers.iter().fold(0, |acc, &n| acc + n);
         println!("合計: {sum}");
 
         let words = vec!["Hello", " ", "World"];
-        let sentence = words
-            .iter()
-            .fold(String::new(), |mut acc, &w| {
-                acc.push_str(w);
-                acc
-            });
+        let sentence = words.iter().fold(String::new(), |mut acc, &w| {
+            acc.push_str(w);
+            acc
+        });
         println!("{sentence}");
     }
 
     // --- collect ---
     {
         let data = vec![1, 2, 3, 4, 5, 6];
-        let evens: Vec<i32> = data
-            .iter()
-            .filter(|&&n| n % 2 == 0)
-            .copied()
-            .collect();
+        let evens: Vec<i32> = data.iter().filter(|&&n| n % 2 == 0).copied().collect();
         println!("偶数: {evens:?}");
 
         let entries = vec![("Alice", 85), ("Bob", 92)];
-        let map: HashMap<&str, i32> =
-            entries.into_iter().collect();
+        let map: HashMap<&str, i32> = entries.into_iter().collect();
         println!("マップ: {map:?}");
     }
 
@@ -176,14 +151,11 @@ fn main() {
     // --- find と position ---
     {
         let numbers = vec![3, 7, 2, 9, 5, 1];
-        let first_even =
-            numbers.iter().find(|&&n| n % 2 == 0);
+        let first_even = numbers.iter().find(|&&n| n % 2 == 0);
         println!("最初の偶数: {first_even:?}");
-        let pos =
-            numbers.iter().position(|&n| n == 9);
+        let pos = numbers.iter().position(|&n| n == 9);
         println!("9の位置: {pos:?}");
-        let not_found =
-            numbers.iter().find(|&&n| n > 100);
+        let not_found = numbers.iter().find(|&&n| n > 100);
         println!("100超: {not_found:?}");
     }
 
@@ -216,11 +188,7 @@ fn main() {
         .map(|s| s.name.as_str())
         .collect();
     println!("合格者: {passing_names:?}");
-    let avg: f64 = students
-        .iter()
-        .map(|s| s.score as f64)
-        .sum::<f64>()
-        / students.len() as f64;
+    let avg: f64 = students.iter().map(|s| s.score as f64).sum::<f64>() / students.len() as f64;
     println!("平均点: {avg:.1}");
 
     // --- CSVデータの処理 ---
@@ -235,9 +203,7 @@ Eve,32,Tokyo";
         .lines()
         .skip(1)
         .filter(|line| line.ends_with("Tokyo"))
-        .map(|line| {
-            line.split(',').next().unwrap_or("unknown")
-        })
+        .map(|line| line.split(',').next().unwrap_or("unknown"))
         .collect();
     println!("東京在住: {tokyo_residents:?}");
 

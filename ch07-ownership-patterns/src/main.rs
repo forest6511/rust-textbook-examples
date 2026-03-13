@@ -20,12 +20,8 @@ fn update_email(user: &mut User, new_email: &str) {
 
 fn parse_name(full_name: &str) -> (String, String) {
     match full_name.split_once(' ') {
-        Some((first, last)) => {
-            (first.to_string(), last.to_string())
-        }
-        None => {
-            (full_name.to_string(), String::new())
-        }
+        Some((first, last)) => (first.to_string(), last.to_string()),
+        None => (full_name.to_string(), String::new()),
     }
 }
 
@@ -47,17 +43,15 @@ fn main() {
     println!("{name}は{upper}になった");
 
     // --- パターン2: ベクタの要素にアクセス ---
-    let names = vec![
-        String::from("Alice"),
-        String::from("Bob"),
-    ];
+    let names = vec![String::from("Alice"), String::from("Bob")];
     let first = &names[0];
     println!("{first}");
     println!("ベクタ: {names:?}");
 
     // --- パターン3: ベクタのイテレーションと変更 ---
     let mut numbers = vec![1, 2, 3, 4, 5];
-    let to_add: Vec<i32> = numbers.iter()
+    let to_add: Vec<i32> = numbers
+        .iter()
         .filter(|&&n| n > 3)
         .map(|&n| n * 10)
         .collect();
@@ -134,10 +128,7 @@ fn main() {
     println!("全員: {names:?}");
 
     // --- 所有権を消費するイテレーション ---
-    let names = vec![
-        String::from("Alice"),
-        String::from("Bob"),
-    ];
+    let names = vec![String::from("Alice"), String::from("Bob")];
     for name in names {
         println!("Goodbye, {name}!");
     }

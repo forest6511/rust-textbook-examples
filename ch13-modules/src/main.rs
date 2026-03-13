@@ -132,10 +132,8 @@ fn main() {
     println!("{}", math::subtract(10, 3));
 
     // --- ネストしたモジュール ---
-    let response =
-        network::http::get("https://example.com");
-    let conn =
-        network::tcp::connect("127.0.0.1:8080");
+    let response = network::http::get("https://example.com");
+    let conn = network::tcp::connect("127.0.0.1:8080");
     println!("{response}");
     println!("{conn}");
 

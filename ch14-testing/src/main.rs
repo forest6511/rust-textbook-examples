@@ -51,14 +51,8 @@ fn main() {
     println!("multiply(3, 4) = {}", multiply(3, 4));
     println!("{}", greeting("田中"));
     println!("divide(10, 3) = {}", divide(10, 3));
-    println!(
-        "reverse(\"hello\") = {}",
-        reverse_string("hello")
-    );
-    println!(
-        "internal_helper(5) = {}",
-        internal_helper(5)
-    );
+    println!("reverse(\"hello\") = {}", reverse_string("hello"));
+    println!("internal_helper(5) = {}", internal_helper(5));
 
     let user = User::new("Alice", 20);
     println!("{}は成人? {}", user.name, user.is_adult());
@@ -114,9 +108,7 @@ mod tests {
 
     #[test]
     fn test_parse() -> Result<(), String> {
-        let value: i32 = "42"
-            .parse()
-            .map_err(|e| format!("変換失敗: {e}"))?;
+        let value: i32 = "42".parse().map_err(|e| format!("変換失敗: {e}"))?;
         assert_eq!(value, 42);
         Ok(())
     }

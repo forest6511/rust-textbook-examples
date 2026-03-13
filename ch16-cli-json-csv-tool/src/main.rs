@@ -8,10 +8,7 @@ use std::fs;
 use std::io::{self, Read, Write};
 
 #[derive(Parser)]
-#[command(
-    name = "dataconv",
-    about = "CSV と JSON の相互変換ツール"
-)]
+#[command(name = "dataconv", about = "CSV と JSON の相互変換ツール")]
 struct Cli {
     #[command(subcommand)]
     command: Commands,
@@ -61,9 +58,7 @@ fn run(cli: Cli) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn read_input(
-    path: &Option<String>,
-) -> Result<String, Box<dyn Error>> {
+fn read_input(path: &Option<String>) -> Result<String, Box<dyn Error>> {
     match path {
         Some(p) => Ok(fs::read_to_string(p)?),
         None => {
@@ -74,30 +69,22 @@ fn read_input(
     }
 }
 
-fn write_output(
-    path: &Option<String>,
-    content: &str,
-) -> Result<(), Box<dyn Error>> {
+fn write_output(path: &Option<String>, content: &str) -> Result<(), Box<dyn Error>> {
     match path {
         Some(p) => {
             fs::write(p, content)?;
             eprintln!("{} に書き出しました", p);
         }
         None => {
-            io::stdout()
-                .write_all(content.as_bytes())?;
+            io::stdout().write_all(content.as_bytes())?;
         }
     }
     Ok(())
 }
 
-fn csv_to_json(
-    input: &str,
-) -> Result<String, Box<dyn Error>> {
-    let mut reader =
-        csv::Reader::from_reader(input.as_bytes());
-    let mut records: Vec<HashMap<String, String>> =
-        Vec::new();
+fn csv_to_json(input: &str) -> Result<String, Box<dyn Error>> {
+    let mut reader = csv::Reader::from_reader(input.as_bytes());
+    let mut records: Vec<HashMap<String, String>> = Vec::new();
     for result in reader.deserialize() {
         let record: HashMap<String, String> = result?;
         records.push(record);
@@ -106,11 +93,8 @@ fn csv_to_json(
     Ok(json)
 }
 
-fn json_to_csv(
-    input: &str,
-) -> Result<String, Box<dyn Error>> {
-    let values: Vec<serde_json::Value> =
-        serde_json::from_str(input)?;
+fn json_to_csv(input: &str) -> Result<String, Box<dyn Error>> {
+    let values: Vec<serde_json::Value> = serde_json::from_str(input)?;
     let records = values_to_records(&values)?;
 
     if records.is_empty() {
@@ -123,19 +107,16 @@ fn json_to_csv(
 
 fn values_to_records(
     values: &[serde_json::Value],
-) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>>
-{
+) -> Result<Vec<HashMap<String, String>>, Box<dyn Error>> {
     let mut records = Vec::new();
     for value in values {
-        let obj = value.as_object().ok_or(
-            "各要素はJSONオブジェクトである必要があります",
-        )?;
+        let obj = value
+            .as_object()
+            .ok_or("各要素はJSONオブジェクトである必要があります")?;
         let mut record = HashMap::new();
         for (key, val) in obj {
             let s = match val {
-                serde_json::Value::String(s) => {
-                    s.clone()
-                }
+                serde_json::Value::String(s) => s.clone(),
                 other => other.to_string(),
             };
             record.insert(key.clone(), s);
@@ -145,14 +126,11 @@ fn values_to_records(
     Ok(records)
 }
 
-fn detect_columns(
-    records: &[HashMap<String, String>],
-) -> Vec<String> {
+fn detect_columns(records: &[HashMap<String, String>]) -> Vec<String> {
     if records.is_empty() {
         return Vec::new();
     }
-    let mut columns: Vec<String> =
-        records[0].keys().cloned().collect();
+    let mut columns: Vec<String> = records[0].keys().cloned().collect();
     columns.sort();
     columns
 }
@@ -161,19 +139,13 @@ fn records_to_csv(
     records: &[HashMap<String, String>],
     columns: &[String],
 ) -> Result<String, Box<dyn Error>> {
-    let mut wtr =
-        csv::Writer::from_writer(Vec::new());
+    let mut wtr = csv::Writer::from_writer(Vec::new());
     wtr.write_record(columns)?;
 
     for record in records {
         let row: Vec<&str> = columns
             .iter()
-            .map(|col| {
-                record
-                    .get(col)
-                    .map(|s| s.as_str())
-                    .unwrap_or("")
-            })
+            .map(|col| record.get(col).map(|s| s.as_str()).unwrap_or(""))
             .collect();
         wtr.write_record(&row)?;
     }
@@ -191,8 +163,7 @@ mod tests {
     fn test_csv_to_json() {
         let csv = "name,age\nAlice,30\nBob,25";
         let json = csv_to_json(csv).unwrap();
-        let parsed: Vec<HashMap<String, String>> =
-            serde_json::from_str(&json).unwrap();
+        let parsed: Vec<HashMap<String, String>> = serde_json::from_str(&json).unwrap();
 
         assert_eq!(parsed.len(), 2);
         assert_eq!(parsed[0]["name"], "Alice");
@@ -229,12 +200,9 @@ mod tests {
     #[test]
     fn test_detect_columns() {
         let mut record = HashMap::new();
-        record
-            .insert("b".to_string(), "2".to_string());
-        record
-            .insert("a".to_string(), "1".to_string());
-        record
-            .insert("c".to_string(), "3".to_string());
+        record.insert("b".to_string(), "2".to_string());
+        record.insert("a".to_string(), "1".to_string());
+        record.insert("c".to_string(), "3".to_string());
 
         let columns = detect_columns(&[record]);
         assert_eq!(columns, vec!["a", "b", "c"]);
@@ -242,8 +210,7 @@ mod tests {
 
     #[test]
     fn test_json_with_numbers() {
-        let json =
-            r#"[{"name": "Alice", "age": 30}]"#;
+        let json = r#"[{"name": "Alice", "age": 30}]"#;
         let csv = json_to_csv(json).unwrap();
         assert!(csv.contains("30"));
     }

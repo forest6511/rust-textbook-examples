@@ -107,9 +107,7 @@ enum Shape {
 
 fn area(shape: &Shape) -> f64 {
     match shape {
-        Shape::Circle(r) => {
-            std::f64::consts::PI * r * r
-        }
+        Shape::Circle(r) => std::f64::consts::PI * r * r,
         Shape::Rectangle(w, h) => w * h,
         Shape::Triangle(a, b, c) => {
             let s = (a + b + c) / 2.0;

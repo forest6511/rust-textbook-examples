@@ -82,9 +82,7 @@ fn print_info<T: fmt::Display>(item: &T) {
     println!("値: {item}");
 }
 
-fn print_debug_and_display<T: fmt::Display + fmt::Debug>(
-    item: &T,
-) {
+fn print_debug_and_display<T: fmt::Display + fmt::Debug>(item: &T) {
     println!("Display: {item}");
     println!("Debug: {item:?}");
 }
@@ -105,10 +103,7 @@ struct Temperature {
 }
 
 impl fmt::Display for Temperature {
-    fn fmt(
-        &self,
-        f: &mut fmt::Formatter,
-    ) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "{:.1}°C", self.celsius)
     }
 }
@@ -245,10 +240,6 @@ fn main() {
     ];
 
     for animal in &animals {
-        println!(
-            "{}: {}",
-            animal.name(),
-            animal.speak()
-        );
+        println!("{}: {}", animal.name(), animal.speak());
     }
 }

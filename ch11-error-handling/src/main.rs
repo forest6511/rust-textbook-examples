@@ -59,9 +59,7 @@ fn parse_age(input: &str) -> Result<u32, InputError> {
     if input.is_empty() {
         return Err(InputError::Empty);
     }
-    let age: i32 = input
-        .parse()
-        .map_err(InputError::InvalidNumber)?;
+    let age: i32 = input.parse().map_err(InputError::InvalidNumber)?;
     if age < 0 || age > 150 {
         return Err(InputError::OutOfRange(age));
     }
@@ -116,10 +114,7 @@ fn divide(a: f64, b: f64) -> Result<f64, String> {
 // --- パニックの使いどころ ---
 fn create_config(max_connections: u32) -> u32 {
     if max_connections == 0 {
-        panic!(
-            "max_connectionsは1以上が必要です: {}",
-            max_connections
-        );
+        panic!("max_connectionsは1以上が必要です: {}", max_connections);
     }
     max_connections
 }
@@ -131,10 +126,7 @@ struct User {
     age: u32,
 }
 
-fn create_user(
-    name: &str,
-    age_str: &str,
-) -> Result<User, String> {
+fn create_user(name: &str, age_str: &str) -> Result<User, String> {
     if name.is_empty() {
         return Err("名前は必須です".to_string());
     }
@@ -143,9 +135,7 @@ fn create_user(
     }
     let age: u32 = age_str
         .parse()
-        .map_err(|_| {
-            "年齢は数値で入力してください".to_string()
-        })?;
+        .map_err(|_| "年齢は数値で入力してください".to_string())?;
     if age > 150 {
         return Err("年齢が範囲外です".to_string());
     }
@@ -186,8 +176,7 @@ fn main() {
     // --- unwrapとexpect ---
     let num: i32 = "42".parse().unwrap();
     println!("数値: {num}");
-    let num: i32 =
-        "100".parse().expect("数値の変換に失敗");
+    let num: i32 = "100".parse().expect("数値の変換に失敗");
     println!("数値: {num}");
 
     // --- ?演算子のチェーン ---
@@ -212,11 +201,7 @@ fn main() {
     }
 
     // --- 早期リターンパターン ---
-    let cases = [
-        ("Alice", "30"),
-        ("", "25"),
-        ("Bob", "abc"),
-    ];
+    let cases = [("Alice", "30"), ("", "25"), ("Bob", "abc")];
     for (name, age) in cases {
         match create_user(name, age) {
             Ok(u) => println!("作成: {:?}", u),
