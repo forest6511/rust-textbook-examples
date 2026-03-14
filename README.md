@@ -49,3 +49,5 @@ MIT License — 詳細は [LICENSE](LICENSE) を参照してください。
 ## 書籍について
 
 本書は Amazon Kindle / Kindle Unlimited で販売中です。
+
+[Rust言語の教科書 — 基礎からコマンドラインツール開発まで（Amazon）](https://www.amazon.co.jp/dp/B0GSHJ3PTQ)
